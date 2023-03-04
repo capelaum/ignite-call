@@ -1,3 +1,4 @@
+import { SEO } from '@/components/Head/SEO'
 import { getCssText } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { Head, Html, Main, NextScript } from 'next/document'
 
@@ -21,6 +22,12 @@ export default function Document() {
         <style
           id="stitches"
           dangerouslySetInnerHTML={{ __html: getCssText() }}
+        />
+
+        <SEO
+          title="Ignite Call - Agende suas tarefas."
+          description="Agendamento de tarefas com o Google Calendar."
+          url={process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}
         />
       </Head>
       <body>
