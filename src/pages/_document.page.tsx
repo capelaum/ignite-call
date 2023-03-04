@@ -1,3 +1,4 @@
+import { Favicon } from '@/components/Head/Favicon'
 import { SEO } from '@/components/Head/SEO'
 import { getCssText } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { Head, Html, Main, NextScript } from 'next/document'
@@ -23,6 +24,8 @@ export default function Document() {
           id="stitches"
           dangerouslySetInnerHTML={{ __html: getCssText() }}
         />
+
+        <Favicon />
 
         <SEO
           title="Ignite Call - Agende suas tarefas."
