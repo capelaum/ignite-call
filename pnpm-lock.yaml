@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@capelaum-packages/ignite-react-05-design-system-react': ^2.0.2
+  '@hookform/resolvers': ^2.9.11
   '@types/node': 18.14.6
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -11,10 +12,13 @@ specifiers:
   phosphor-react: ^1.4.1
   react: 18.2.0
   react-dom: 18.2.0
+  react-hook-form: ^7.43.4
   typescript: 4.9.5
+  zod: ^3.21.0
 
 dependencies:
   '@capelaum-packages/ignite-react-05-design-system-react': 2.0.2_zula6vjvt3wdocc4mwcxqa6nzi
+  '@hookform/resolvers': 2.9.11_react-hook-form@7.43.4
   '@types/node': 18.14.6
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -24,7 +28,9 @@ dependencies:
   phosphor-react: 1.4.1_react@18.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-hook-form: 7.43.4_react@18.2.0
   typescript: 4.9.5
+  zod: 3.21.0
 
 packages:
 
@@ -93,6 +99,14 @@ packages:
       use-isomorphic-layout-effect: 1.1.2_pmekkgnqduwlme35zpnqhenc34
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@hookform/resolvers/2.9.11_react-hook-form@7.43.4:
+    resolution: {integrity: sha512-bA3aZ79UgcHj7tFV7RlgThzwSSHZgvfbt2wprldRkYBcMopdMvHyO17Wwp/twcJasNFischFfS7oz8Katz8DdQ==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.43.4_react@18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
@@ -2129,6 +2143,15 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-hook-form/7.43.4_react@18.2.0:
+    resolution: {integrity: sha512-JZp05wvmuV8qr3NNDWwyhiQL05sh9E8x/2NoWtkdiyyiezmwOr5pKexlvbCEfBMa7ZYrvzk88G/uhLl47T9b7Q==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -2510,4 +2533,8 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  /zod/3.21.0:
+    resolution: {integrity: sha512-UYdykTcVxB6lfdyLzAqLyyYAlOcpoluECvjsdoaqfQmz9p+3LRaIqYcNiL/J2kFYp66fBM8wwBvIGVEjq7KtZw==}
     dev: false
