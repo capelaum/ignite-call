@@ -42,11 +42,11 @@ export const HomeLeftContainer = styled('div', {
     alignItems: 'center',
     maxWidth: 320,
 
-    [`${Heading}`]: {
+    [`> ${Heading}`]: {
       fontSize: '$6xl'
     },
 
-    [`${Text}`]: {
+    [`> ${Text}`]: {
       fontSize: '$sm'
     }
   },

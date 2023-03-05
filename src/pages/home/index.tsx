@@ -5,6 +5,7 @@ import {
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import Head from 'next/head'
 import Image from 'next/image'
+import { ClaimUsernameForm } from './components/ClaimUsernameForm'
 import {
   BgImageWrapper,
   HomeContainer,
@@ -37,6 +38,8 @@ export default function Home() {
             Conecte seu calendário e permita que as pessoas marquem agendamentos
             no seu tempo livre.
           </Text>
+
+          <ClaimUsernameForm />
         </HomeLeftContainer>
 
         <HomeRightContainer>

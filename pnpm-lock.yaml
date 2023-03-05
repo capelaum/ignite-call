@@ -8,6 +8,7 @@ specifiers:
   eslint: 8.35.0
   eslint-config-next: 13.2.3
   next: 13.2.3
+  phosphor-react: ^1.4.1
   react: 18.2.0
   react-dom: 18.2.0
   typescript: 4.9.5
@@ -20,6 +21,7 @@ dependencies:
   eslint: 8.35.0
   eslint-config-next: 13.2.3_ycpbpc6yetojsgtrx3mwntkhsu
   next: 13.2.3_biqbaboplfbrettd7655fr4n2y
+  phosphor-react: 1.4.1_react@18.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   typescript: 4.9.5
