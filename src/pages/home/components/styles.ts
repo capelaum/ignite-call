@@ -1,6 +1,7 @@
 import {
   Box,
-  styled
+  styled,
+  Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 
 export const Form = styled(Box, {
@@ -13,5 +14,21 @@ export const Form = styled(Box, {
   '@bp2': {
     gridTemplateColumns: '1fr',
     gap: '$3'
+  }
+})
+
+export const FormMessage = styled('span', {
+  [`> ${Text}`]: {
+    color: '$gray400'
+  },
+
+  variants: {
+    hasError: {
+      true: {
+        [`> ${Text}`]: {
+          color: '#F75A68'
+        }
+      }
+    }
   }
 })
