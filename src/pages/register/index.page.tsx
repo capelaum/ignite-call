@@ -31,6 +31,7 @@ const registerFormSchema = z.object({
     .string()
     .trim()
     .min(3, { message: 'Nome deve ter no mínimo 3 letras.' })
+    .max(150, { message: 'Nome deve ter no máximo 150 letras.' })
 })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
