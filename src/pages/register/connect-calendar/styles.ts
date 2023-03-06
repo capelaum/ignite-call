@@ -1,6 +1,7 @@
 import {
   Box,
-  styled
+  styled,
+  Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 
 export const ConnectBox = styled(Box, {
@@ -14,8 +15,13 @@ export const ConnectItem = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
 
-  marginBottom: '$2',
+  marginBottom: '$4',
   borderRadius: '$md',
   border: '1px solid $gray600',
   padding: '$4 $6'
+})
+
+export const AuthPermissionErrorMessage = styled(Text, {
+  color: '#F75A68',
+  marginBottom: '$4'
 })

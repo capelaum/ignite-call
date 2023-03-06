@@ -4,12 +4,23 @@ import {
   MultiStep,
   Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
-import { ArrowRight } from 'phosphor-react'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { ArrowRight, Check } from 'phosphor-react'
 import { Header, RegisterContainer } from '../styles'
-import { ConnectBox, ConnectItem } from './styles'
+import { AuthPermissionErrorMessage, ConnectBox, ConnectItem } from './styles'
 
-export default function Register() {
-  async function handleRegister() {}
+export default function ConnectCalendar() {
+  const session = useSession()
+
+  const router = useRouter()
+
+  const hasAuthPermissionError = !!router.query.error
+  const isSignedIn = session.status === 'authenticated'
+
+  async function handleSignInAndConnectCalendar() {
+    await signIn('google')
+  }
 
   return (
     <RegisterContainer>
@@ -27,13 +38,30 @@ export default function Register() {
       <ConnectBox>
         <ConnectItem>
           <Text>Google Calendar</Text>
-          <Button variant="secondary" size="sm">
-            Conectar
-            <ArrowRight weight="bold" />
+          <Button
+            variant={isSignedIn ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={handleSignInAndConnectCalendar}
+            disabled={isSignedIn}
+          >
+            {isSignedIn ? 'Conectado' : 'Conectar'}
+
+            {isSignedIn ? (
+              <Check weight="bold" />
+            ) : (
+              <ArrowRight weight="bold" />
+            )}
           </Button>
         </ConnectItem>
 
-        <Button type="submit">
+        {hasAuthPermissionError && (
+          <AuthPermissionErrorMessage size="sm">
+            Falha ao conectar com o Google Calendar. Por favor, verifique se
+            você habilitou as permissões de acesso ao Google Calendar.
+          </AuthPermissionErrorMessage>
+        )}
+
+        <Button type="submit" disabled={!isSignedIn || hasAuthPermissionError}>
           Próximo passo
           <ArrowRight weight="bold" />
         </Button>
