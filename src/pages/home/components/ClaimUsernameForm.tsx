@@ -1,6 +1,5 @@
 import {
   Button,
-  Text,
   TextInput
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -42,7 +41,11 @@ export function ClaimUsernameForm() {
 
   return (
     <>
-      <Form as="form" onSubmit={handleSubmit(handleClaimUsername)}>
+      <Form
+        as="form"
+        onSubmit={handleSubmit(handleClaimUsername)}
+        autoComplete="off"
+      >
         <TextInput
           sizeValue="sm"
           prefix="ignitecall.com.br/"
@@ -55,12 +58,11 @@ export function ClaimUsernameForm() {
           <ArrowRight weight="bold" />
         </Button>
       </Form>
-      <FormMessage hasError={!!errors.username}>
-        <Text size="sm">
-          {errors.username
-            ? errors.username.message
-            : 'Digite um nome de usuário'}
-        </Text>
+
+      <FormMessage size="sm">
+        {errors.username
+          ? errors.username.message
+          : 'Digite um nome de usuário'}
       </FormMessage>
     </>
   )

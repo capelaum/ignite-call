@@ -17,17 +17,13 @@ export const Form = styled(Box, {
   }
 })
 
-export const FormMessage = styled('span', {
-  [`> ${Text}`]: {
-    color: '$gray400'
-  },
+export const FormMessage = styled(Text, {
+  color: '$gray400',
 
   variants: {
     hasError: {
       true: {
-        [`> ${Text}`]: {
-          color: '#F75A68'
-        }
+        color: '#F75A68'
       }
     }
   }
