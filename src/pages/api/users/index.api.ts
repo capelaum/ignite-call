@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { setCookie } from 'cookies-next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
@@ -31,6 +32,13 @@ export default async function handler(
       name,
       username
     }
+  })
+
+  setCookie(`${process.env.NEXT_PUBLIC_COOKIE_NAME}userId`, user.id, {
+    req,
+    res,
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+    path: '/'
   })
 
   return res.status(201).json(user)
