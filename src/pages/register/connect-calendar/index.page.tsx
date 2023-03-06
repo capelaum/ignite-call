@@ -12,7 +12,6 @@ import { AuthPermissionErrorMessage, ConnectBox, ConnectItem } from './styles'
 
 export default function ConnectCalendar() {
   const session = useSession()
-  console.log('💥 ~ session:', session)
 
   const router = useRouter()
 
