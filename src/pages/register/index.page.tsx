@@ -1,3 +1,4 @@
+import { api } from '@/lib/axios'
 import {
   Button,
   Heading,
@@ -6,10 +7,12 @@ import {
   TextInput
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { ArrowRight } from 'phosphor-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { Form, FormErrorMessage, Header, RegisterContainer } from './styles'
 
@@ -55,7 +58,21 @@ export default function Register() {
   }, [router.query?.username, setValue])
 
   async function handleRegister(data: RegisterFormData) {
-    console.log('💥 ~ data:', data)
+    try {
+      const { name, username } = data
+
+      await api.post('/users', {
+        username,
+        name
+      })
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.data.message) {
+        toast.error(error.response.data.message)
+        return
+      }
+
+      console.error('💥 ~ error:', error)
+    }
   }
 
   return (
