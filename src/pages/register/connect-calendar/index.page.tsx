@@ -40,20 +40,21 @@ export default function ConnectCalendar() {
       <ConnectBox>
         <ConnectItem>
           <Text>Google Calendar</Text>
-          <Button
-            variant={isSignedIn ? 'primary' : 'secondary'}
-            size="sm"
-            onClick={handleSignInAndConnectCalendar}
-            disabled={isSignedIn}
-          >
-            {isSignedIn && !hasAuthPermissionError ? 'Conectado' : 'Conectar'}
-
-            {isSignedIn ? (
+          {isSignedIn && !hasAuthPermissionError ? (
+            <Button variant="primary" size="sm" disabled>
+              Conectado
               <Check weight="bold" />
-            ) : (
+            </Button>
+          ) : (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleSignInAndConnectCalendar}
+            >
+              Conectar
               <ArrowRight weight="bold" />
-            )}
-          </Button>
+            </Button>
+          )}
         </ConnectItem>
 
         {hasAuthPermissionError && (
