@@ -12,6 +12,7 @@ import { AuthPermissionErrorMessage, ConnectBox, ConnectItem } from './styles'
 
 export default function ConnectCalendar() {
   const session = useSession()
+  console.log('💥 ~ session:', session)
 
   const router = useRouter()
 
@@ -19,7 +20,9 @@ export default function ConnectCalendar() {
   const isSignedIn = session.status === 'authenticated'
 
   async function handleSignInAndConnectCalendar() {
-    await signIn('google')
+    await signIn('google', {
+      callbackUrl: '/register/connect-calendar'
+    })
   }
 
   return (
@@ -44,7 +47,7 @@ export default function ConnectCalendar() {
             onClick={handleSignInAndConnectCalendar}
             disabled={isSignedIn}
           >
-            {isSignedIn ? 'Conectado' : 'Conectar'}
+            {isSignedIn && !hasAuthPermissionError ? 'Conectado' : 'Conectar'}
 
             {isSignedIn ? (
               <Check weight="bold" />
