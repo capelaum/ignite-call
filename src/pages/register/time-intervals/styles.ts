@@ -1,6 +1,7 @@
 import {
   Box,
-  styled
+  styled,
+  Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 
 export const IntervalBox = styled(Box, {
@@ -40,4 +41,9 @@ export const IntervalInputs = styled('div', {
   'input::-webkit-calendar-picker-indicator': {
     filter: 'invert(1) brightness(0.5)'
   }
+})
+
+export const TimeIntervalsErrorMessage = styled(Text, {
+  color: '#F75A68',
+  marginBottom: '$4'
 })
