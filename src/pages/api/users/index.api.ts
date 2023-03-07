@@ -2,11 +2,6 @@ import { prisma } from '@/lib/prisma'
 import { setCookie } from 'cookies-next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  name: string
-  username: string
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

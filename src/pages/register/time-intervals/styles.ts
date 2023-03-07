@@ -24,6 +24,11 @@ export const IntervalItem = styled('div', {
 
   '& + &': {
     borderTop: '1px solid $gray600'
+  },
+
+  '@bp3': {
+    flexDirection: 'column',
+    gap: '$5'
   }
 })
 

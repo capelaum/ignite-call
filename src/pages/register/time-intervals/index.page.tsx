@@ -1,3 +1,4 @@
+import { api } from '@/lib/axios'
 import { convertTimeStringToMinutes } from '@/utils/convert-time-string-to-minutes'
 import { getWeekDays } from '@/utils/get-week-days'
 import {
@@ -9,8 +10,10 @@ import {
   TextInput
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { Header, RegisterContainer } from '../styles'
 import {
@@ -94,7 +97,20 @@ export default function TimeIntervals() {
   async function handleSetTimeIntervals(
     data: TimeIntervalsFormInput | TimeIntervalsFormOutput
   ) {
-    console.log('💥 ~ data:', data)
+    const { intervals } = data
+
+    try {
+      await api.post('/users/time-intervals', {
+        intervals
+      })
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.data.message) {
+        toast.error(error.response.data.message)
+        return
+      }
+
+      console.error('💥 ~ error:', error)
+    }
   }
 
   return (

@@ -24,6 +24,10 @@ export default function ConnectCalendar() {
     })
   }
 
+  async function handleNextStep() {
+    await router.push('/register/time-intervals')
+  }
+
   return (
     <RegisterContainer>
       <Header>
@@ -64,7 +68,11 @@ export default function ConnectCalendar() {
           </AuthPermissionErrorMessage>
         )}
 
-        <Button type="submit" disabled={!isSignedIn || hasAuthPermissionError}>
+        <Button
+          type="submit"
+          disabled={!isSignedIn || hasAuthPermissionError}
+          onClick={handleNextStep}
+        >
           Próximo passo
           <ArrowRight weight="bold" />
         </Button>
