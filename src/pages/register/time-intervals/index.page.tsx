@@ -1,3 +1,4 @@
+import { convertTimeStringToMinutes } from '@/utils/convert-time-string-to-minutes'
 import { getWeekDays } from '@/utils/get-week-days'
 import {
   Button,
@@ -8,7 +9,6 @@ import {
   TextInput
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSession } from 'next-auth/react'
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -37,66 +37,47 @@ const timeIntervalsFormSchema = z.object({
     .refine((intervals) => intervals.length > 0, {
       message: 'Selecione pelo menos um dia da semana.'
     })
+    .transform((intervals) =>
+      intervals.map((interval) => ({
+        weekDay: interval.weekDay,
+        enabled: interval.enabled,
+        startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
+        endTimeInMinutes: convertTimeStringToMinutes(interval.endTime)
+      }))
+    )
+    .refine(
+      (intervals) =>
+        intervals.every(
+          (interval) =>
+            interval.endTimeInMinutes - interval.startTimeInMinutes >= 60
+        ),
+      {
+        message: 'O intervalo de tempo deve ser de pelo menos 1 hora.'
+      }
+    )
 })
 
-type TimeIntervalsFormData = z.infer<typeof timeIntervalsFormSchema>
+type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
+type TimeIntervalsFormOutput = z.output<typeof timeIntervalsFormSchema>
 
 export default function TimeIntervals() {
-  const session = useSession()
-  const isSignedIn = session.status === 'authenticated'
-
   const {
     register,
     handleSubmit,
     control,
     watch,
     formState: { errors, isSubmitting }
-  } = useForm<TimeIntervalsFormData>({
+  } = useForm<TimeIntervalsFormInput | TimeIntervalsFormOutput>({
     resolver: zodResolver(timeIntervalsFormSchema),
     defaultValues: {
       intervals: [
-        {
-          weekDay: 0,
-          enabled: false,
-          startTime: '08:00',
-          endTime: '18:00'
-        },
-        {
-          weekDay: 1,
-          enabled: true,
-          startTime: '08:00',
-          endTime: '18:00'
-        },
-        {
-          weekDay: 2,
-          enabled: true,
-          startTime: '08:00',
-          endTime: '18:00'
-        },
-        {
-          weekDay: 3,
-          enabled: true,
-          startTime: '08:00',
-          endTime: '18:00'
-        },
-        {
-          weekDay: 4,
-          enabled: true,
-          startTime: '08:00',
-          endTime: '18:00'
-        },
-        {
-          weekDay: 5,
-          enabled: true,
-          startTime: '08:00',
-          endTime: '18:00'
-        },
-        {
-          weekDay: 6,
-          enabled: false,
-          startTime: '08:00',
-          endTime: '18:00'
-        }
+        { weekDay: 0, enabled: false, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 1, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 2, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 3, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 4, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 5, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' }
       ]
     }
   })
@@ -110,7 +91,9 @@ export default function TimeIntervals() {
 
   const intervals = watch('intervals')
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormData) {
+  async function handleSetTimeIntervals(
+    data: TimeIntervalsFormInput | TimeIntervalsFormOutput
+  ) {
     console.log('💥 ~ data:', data)
   }
 
