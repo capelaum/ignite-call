@@ -1,4 +1,5 @@
 import { api } from '@/lib/axios'
+import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import { convertTimeStringToMinutes } from '@/utils/convert-time-string-to-minutes'
 import { getWeekDays } from '@/utils/get-week-days'
 import {
@@ -10,7 +11,8 @@ import {
   TextInput
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
+import { GetServerSideProps } from 'next'
+import { getServerSession } from 'next-auth'
 import { useRouter } from 'next/router'
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
@@ -107,13 +109,11 @@ export default function TimeIntervals() {
         intervals
       })
 
+      toast.success('Sua disponibilidade foi salva!')
+
       await router.push('/register/update-profile')
     } catch (error) {
-      if (error instanceof AxiosError && error.response?.data.message) {
-        toast.error(error.response.data.message)
-        return
-      }
-
+      toast.error('Ooops.. Ocorreu um erro ao salvar sua disponibilidade.')
       console.error('💥 ~ error:', error)
     }
   }
@@ -121,7 +121,7 @@ export default function TimeIntervals() {
   return (
     <RegisterContainer>
       <Header>
-        <Heading as="strong">Quase lá</Heading>
+        <Heading as="strong">Defina sua disponibilidade</Heading>
 
         <Text>
           Defina o intervalo de horários que você está disponível em cada dia da
@@ -186,4 +186,27 @@ export default function TimeIntervals() {
       </IntervalBox>
     </RegisterContainer>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOptions(req, res)
+  )
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/register',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
 }

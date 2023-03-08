@@ -71,6 +71,8 @@ export default function Register() {
       if (error instanceof AxiosError && error.response?.data.message) {
         toast.error(error.response.data.message)
         return
+      } else {
+        toast.error('Ocorreu um erro ao tentar criar seu perfil.')
       }
 
       console.error('💥 ~ error:', error)

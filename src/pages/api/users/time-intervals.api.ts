@@ -41,6 +41,12 @@ export default async function handler(
 
   if (!session || !session?.user?.id) return res.status(401).end()
 
+  await prisma.userTimeInterval.deleteMany({
+    where: {
+      user_id: session.user.id
+    }
+  })
+
   const { intervals } = timeIntervalsBodySchema.parse(req.body)
 
   await prisma.userTimeInterval.createMany({

@@ -1,12 +1,16 @@
+import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import {
   Button,
   Heading,
   MultiStep,
   Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
+import { GetServerSideProps } from 'next'
+import { getServerSession } from 'next-auth'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ArrowRight, Check } from 'phosphor-react'
+import { toast } from 'react-toastify'
 import { Header, RegisterContainer } from '../styles'
 import { AuthPermissionErrorMessage, ConnectBox, ConnectItem } from './styles'
 
@@ -19,9 +23,16 @@ export default function ConnectCalendar() {
   const isSignedIn = session.status === 'authenticated'
 
   async function handleSignInAndConnectCalendar() {
-    await signIn('google', {
-      callbackUrl: '/register/connect-calendar'
-    })
+    try {
+      await signIn('google', {
+        callbackUrl: '/register/connect-calendar'
+      })
+
+      toast.success('Seu Google Calendar foi conectado!')
+    } catch (error) {
+      toast.error('Falha ao conectar com o Google Calendar.')
+      console.error('💥 ~ error:', error)
+    }
   }
 
   async function handleNextStep() {
@@ -79,4 +90,27 @@ export default function ConnectCalendar() {
       </ConnectBox>
     </RegisterContainer>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOptions(req, res)
+  )
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/register',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
 }

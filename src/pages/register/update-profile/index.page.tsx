@@ -1,3 +1,4 @@
+import { api } from '@/lib/axios'
 import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import {
   Avatar,
@@ -11,8 +12,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { Check } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { FormErrorMessage, Header, RegisterContainer } from '../styles'
 import { FormAnnotation, ProfileBox } from './styles'
@@ -39,22 +42,39 @@ export default function UpdateProfile() {
     resolver: zodResolver(updateProfileFormSchema)
   })
 
+  const router = useRouter()
+
   const session = useSession()
   console.log('💥 ~ session:', session)
 
-  async function handleUpdateProfile(data: UpdateProfileFormData) {}
+  async function handleUpdateProfile(data: UpdateProfileFormData) {
+    const { bio } = data
+
+    try {
+      await api.put('/users/profile', {
+        bio
+      })
+
+      toast.success('Seu perfil foi atualizado!')
+
+      await router.push(`/schedule/${session.data?.user.username}`)
+    } catch (error) {
+      toast.error('Ooops.. Ocorreu um erro ao atualizar seu perfil.')
+      console.error('💥 ~ error:', error)
+    }
+  }
 
   return (
     <RegisterContainer>
       <Header>
-        <Heading as="strong">Bem-vindo ao Ignite Call!</Heading>
+        <Heading as="strong">Quase lá</Heading>
 
         <Text>
           Precisamos de algumas informações para criar seu perfil! Ah, você pode
           editar essas informações depois.
         </Text>
 
-        <MultiStep size={4} currentStep={1} />
+        <MultiStep size={4} currentStep={4} />
       </Header>
 
       <ProfileBox
@@ -97,6 +117,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     res,
     buildNextAuthOptions(req, res)
   )
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/register',
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: {
