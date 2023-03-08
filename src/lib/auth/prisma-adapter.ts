@@ -20,6 +20,16 @@ export function PrismaAdapter(
         res
       })[cookieUserIdKey]
 
+      const userInDatabase = await prisma.user.findFirst({
+        where: {
+          id: userIdOnCookies
+        }
+      })
+
+      if (!userInDatabase) {
+        throw new Error('User not found in database')
+      }
+
       const prismaUser = await prisma.user.update({
         where: {
           id: userIdOnCookies

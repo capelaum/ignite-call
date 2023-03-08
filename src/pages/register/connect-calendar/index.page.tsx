@@ -1,12 +1,9 @@
-import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import {
   Button,
   Heading,
   MultiStep,
   Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
-import { GetServerSideProps } from 'next'
-import { getServerSession } from 'next-auth'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ArrowRight, Check } from 'phosphor-react'
@@ -90,27 +87,4 @@ export default function ConnectCalendar() {
       </ConnectBox>
     </RegisterContainer>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getServerSession(
-    req,
-    res,
-    buildNextAuthOptions(req, res)
-  )
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/register',
-        permanent: false
-      }
-    }
-  }
-
-  return {
-    props: {
-      session
-    }
-  }
 }
