@@ -7,6 +7,7 @@ import {
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ArrowRight, Check } from 'phosphor-react'
+import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { Header, RegisterContainer } from '../styles'
 import { AuthPermissionErrorMessage, ConnectBox, ConnectItem } from './styles'
@@ -16,16 +17,20 @@ export default function ConnectCalendar() {
 
   const router = useRouter()
 
+  useEffect(() => {
+    if (router.query.success) {
+      toast.success('Seu Google Calendar foi conectado!')
+    }
+  }, [router.query.success])
+
   const hasAuthPermissionError = !!router.query.error
   const isSignedIn = session.status === 'authenticated'
 
   async function handleSignInAndConnectCalendar() {
     try {
       await signIn('google', {
-        callbackUrl: '/register/connect-calendar'
+        callbackUrl: '/register/connect-calendar?success=true'
       })
-
-      toast.success('Seu Google Calendar foi conectado!')
     } catch (error) {
       toast.error('Falha ao conectar com o Google Calendar.')
       console.error('💥 ~ error:', error)
