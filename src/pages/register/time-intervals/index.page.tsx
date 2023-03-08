@@ -11,6 +11,7 @@ import {
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -85,6 +86,8 @@ export default function TimeIntervals() {
     }
   })
 
+  const router = useRouter()
+
   const weekDays = getWeekDays()
 
   const { fields } = useFieldArray({
@@ -103,6 +106,8 @@ export default function TimeIntervals() {
       await api.post('/users/time-intervals', {
         intervals
       })
+
+      await router.push('/register/update-profile')
     } catch (error) {
       if (error instanceof AxiosError && error.response?.data.message) {
         toast.error(error.response.data.message)

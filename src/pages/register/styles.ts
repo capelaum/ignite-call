@@ -20,6 +20,7 @@ export const Header = styled('header', {
 
   [`> ${Text}`]: {
     color: '$gray200',
+    marginTop: '$2',
     marginBottom: '$6'
   }
 })
