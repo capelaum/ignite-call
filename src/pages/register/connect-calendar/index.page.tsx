@@ -1,9 +1,12 @@
+import { prisma } from '@/lib/prisma'
 import {
   Button,
   Heading,
   MultiStep,
   Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
+import { getCookies, hasCookie } from 'cookies-next'
+import { GetServerSideProps } from 'next'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ArrowRight, Check } from 'phosphor-react'
@@ -92,4 +95,42 @@ export default function ConnectCalendar() {
       </ConnectBox>
     </RegisterContainer>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  try {
+    const cookieUserIdKey = `${process.env.NEXT_PUBLIC_COOKIE_NAME}userId`
+
+    if (!hasCookie(cookieUserIdKey, { req, res })) {
+      throw new Error('User ID not found in cookies')
+    }
+
+    const userIdOnCookies = getCookies({
+      req,
+      res
+    })[cookieUserIdKey]
+
+    const userInDatabase = await prisma.user.findFirst({
+      where: {
+        id: userIdOnCookies
+      }
+    })
+
+    if (!userInDatabase) {
+      throw new Error('User not found in database')
+    }
+
+    return {
+      props: {}
+    }
+  } catch (error) {
+    console.error('💥 ~ error:', error)
+
+    return {
+      redirect: {
+        destination: '/register',
+        permanent: false
+      }
+    }
+  }
 }
