@@ -19,11 +19,18 @@ export const CalendarStepContainer = styled(Box, {
           gridTemplateColumns: '1fr'
         }
       },
+
       false: {
         width: 540,
         gridTemplateColumns: '1fr'
       }
     }
+  },
+
+  '@bp1': {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column'
   },
 
   '@bp2': {
@@ -42,7 +49,6 @@ export const TimePickerContainer = styled('div', {
   right: 0,
   width: 280,
 
-  // set scrollbar styles
   '&::-webkit-scrollbar': {
     width: 8,
     height: 8,
@@ -69,6 +75,15 @@ export const TimePickerContainer = styled('div', {
     '&:active': {
       background: '$gray400'
     }
+  },
+
+  '@bp1': {
+    position: 'relative',
+    width: '100%',
+
+    '&::-webkit-scrollbar-track': {
+      all: 'unset'
+    }
   }
 })
 
@@ -76,18 +91,24 @@ export const TimePickerHeader = styled(Text, {
   fontWeight: '$medium',
 
   span: {
-    color: '$gray200'
+    color: '$gray200',
+    marginLeft: '$2'
+  },
+
+  '@bp1': {
+    textAlign: 'center'
   }
 })
 
 export const TimePickerList = styled('div', {
   marginTop: '$3',
-  display: 'grid',
-  gridTemplateColumns: '1fr',
+  display: 'flex',
+  flexDirection: 'column',
   gap: '$2',
 
   '@bp1': {
-    gridTemplateColumns: '2fr'
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr'
   }
 })
 
