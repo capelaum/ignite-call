@@ -141,10 +141,10 @@ export default function TimeIntervals() {
                   control={control}
                   render={({ field }) => (
                     <Checkbox
+                      checked={field.value}
                       onCheckedChange={(checked) => {
                         field.onChange(checked === true)
                       }}
-                      checked={field.value}
                     />
                   )}
                 />
