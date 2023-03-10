@@ -1,7 +1,8 @@
 import {
   Box,
   styled,
-  Text
+  Text,
+  TextArea
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 
 export const ConfirmForm = styled(Box, {
@@ -14,7 +15,13 @@ export const ConfirmForm = styled(Box, {
   label: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '$2'
+    gap: '$2',
+
+    [`> ${TextArea}`]: {
+      resize: 'verical',
+      minHeight: 100,
+      maxHeight: 240
+    }
   }
 })
 
