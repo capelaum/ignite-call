@@ -45,7 +45,6 @@ export default function UpdateProfile() {
   const router = useRouter()
 
   const session = useSession()
-  console.log('💥 ~ session:', session)
 
   async function handleUpdateProfile(data: UpdateProfileFormData) {
     const { bio } = data

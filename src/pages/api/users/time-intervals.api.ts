@@ -17,7 +17,9 @@ const timeIntervalsBodySchema = z.object({
       (intervals) =>
         intervals.every(
           (interval) =>
-            interval.endTimeInMinutes - interval.startTimeInMinutes >= 60
+            interval.endTimeInMinutes - interval.startTimeInMinutes >= 60 &&
+            interval.endTimeInMinutes % 60 === 0 &&
+            interval.startTimeInMinutes % 60 === 0
         ),
       {
         message: 'O intervalo de tempo deve ser de pelo menos 1 hora.'

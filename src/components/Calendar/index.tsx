@@ -48,7 +48,6 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
     })
 
     const firstWeekDay = currentDate.get('day')
-    console.log('💥 ~ firstWeekDay:', firstWeekDay)
 
     const lastDayInCurrenMonth = currentDate.set(
       'date',

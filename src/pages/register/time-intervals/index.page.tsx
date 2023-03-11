@@ -58,7 +58,18 @@ const timeIntervalsFormSchema = z.object({
             interval.endTimeInMinutes - interval.startTimeInMinutes >= 60
         ),
       {
-        message: 'O intervalo de tempo deve ser de pelo menos 1 hora.'
+        message: 'O intervalo de tempo deve ser de pelo menos 1 hora '
+      }
+    )
+    .refine(
+      (intervals) =>
+        intervals.every(
+          (interval) =>
+            interval.endTimeInMinutes % 60 === 0 &&
+            interval.startTimeInMinutes % 60 === 0
+        ),
+      {
+        message: 'Os horários de início e fim devem ser em horas completas.'
       }
     )
 })
