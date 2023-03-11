@@ -20,7 +20,6 @@ interface Availability {
 
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-  // const [avalability, setAvalability] = useState<Availability | null>(null)
 
   const router = useRouter()
   const username = String(router.query.username)
