@@ -62,7 +62,9 @@ export function ConfirmStep({
       })
 
       await router.push(
-        `/schedule/${username}/success?name=${name}&date=${schedulingDate}`
+        `/schedule/${username}/success?name=${name}&date=${dayjs(
+          schedulingDate
+        )}`
       )
 
       toast.success('Agendamento feito com sucesso!')

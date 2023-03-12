@@ -13,7 +13,7 @@ export default function ScheduleSuccess() {
   const router = useRouter()
   const username = String(router.query.username)
   const name = String(router.query.name)
-  const date = String(router.query.day)
+  const date = String(router.query.date)
 
   const dateFormatted = dayjs(date).format('DD[ de ]MMMM')
   const hour = dayjs(date).format('HH[h]')
