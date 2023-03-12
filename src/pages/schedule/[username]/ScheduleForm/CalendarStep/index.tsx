@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { LineWave } from 'react-loader-spinner'
 import {
   CalendarStepContainer,
   TimePickerContainer,
@@ -18,7 +17,11 @@ interface Availability {
   availableTimes: number[]
 }
 
-export function CalendarStep() {
+interface CalendarStepProps {
+  onSelectDateTime: (date: Date) => void
+}
+
+export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
   const router = useRouter()
@@ -55,6 +58,15 @@ export function CalendarStep() {
       }
     )
 
+  function handleSelectTime(hour: number) {
+    const dateTime = dayjs(selectedDate)
+      .set('hour', hour)
+      .startOf('hour')
+      .toDate()
+
+    onSelectDateTime(dateTime)
+  }
+
   return (
     <CalendarStepContainer isTimePickerOpen={isDateSelected}>
       <Calendar selectedDate={selectedDate} onDateSelected={setSelectedDate} />
@@ -65,31 +77,11 @@ export function CalendarStep() {
             {selectedWeekDay} <span>{selectedDateFormatted}</span>
           </TimePickerHeader>
 
-          {isAvailabilityLoading && (
-            <LineWave
-              height="120"
-              width="120"
-              color="#A9A9B2"
-              ariaLabel="line-wave"
-              wrapperStyle={{
-                width: '100%',
-                marginTop: '2rem',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-              wrapperClass=""
-              visible={true}
-              firstLineColor=""
-              middleLineColor="#00875F"
-              lastLineColor=""
-            />
-          )}
-
           <TimePickerList>
             {availability?.possibleTimes.map((hour) => (
               <TimePickerItem
                 key={hour}
+                onClick={() => handleSelectTime(hour)}
                 disabled={!availability.availableTimes.includes(hour)}
               >
                 {String(hour).padStart(2, '0')}:00
