@@ -1,3 +1,4 @@
+import { api } from '@/lib/axios'
 import { FormErrorMessage } from '@/pages/register/styles'
 import {
   Button,
@@ -7,8 +8,10 @@ import {
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
 import { CalendarBlank, Clock } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { ConfirmForm, ConfirmFormActions, ConfirmFormHeader } from './styles'
 
@@ -35,6 +38,7 @@ export function ConfirmStep({
   schedulingDate,
   onCancelConfirmation
 }: ConfirmStepProps) {
+  console.log('💥 ~ schedulingDate:', schedulingDate)
   const {
     register,
     handleSubmit,
@@ -43,8 +47,29 @@ export function ConfirmStep({
     resolver: zodResolver(confirmFormSchema)
   })
 
-  function handleConfirmScheduling(data: ConfirmFormData) {
-    console.log('💥 ~ data:', data)
+  const router = useRouter()
+  const username = String(router.query.username)
+
+  async function handleConfirmScheduling(data: ConfirmFormData) {
+    const { name, email, observations } = data
+
+    try {
+      await api.post(`/users/${username}/schedule`, {
+        name,
+        email,
+        observations,
+        date: schedulingDate
+      })
+
+      await router.push(
+        `/schedule/${username}/success?name=${name}&date=${schedulingDate}`
+      )
+
+      toast.success('Agendamento feito com sucesso!')
+    } catch (error) {
+      toast.error('Erro ao agendar horário. Por favor, tente novamente.')
+      console.error('💥 ~ error:', error)
+    }
   }
 
   const schedulingDateFormatted = dayjs(schedulingDate).format(
