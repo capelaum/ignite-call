@@ -28,8 +28,8 @@ export default function Document() {
         <Favicon />
 
         <SEO
-          title="Ignite Call - Agende suas tarefas."
-          description="Agendamento de tarefas com o Google Calendar."
+          title="Ignite Call - Agendamento fácil!"
+          description="Agendamento fácil com o Google Calendar 🚀"
           url={process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}
         />
       </Head>
