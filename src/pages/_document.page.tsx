@@ -1,5 +1,4 @@
 import { Favicon } from '@/components/Head/Favicon'
-import { SEO } from '@/components/Head/SEO'
 import { getCssText } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { Head, Html, Main, NextScript } from 'next/document'
 
@@ -27,11 +26,11 @@ export default function Document() {
 
         <Favicon />
 
-        <SEO
+        {/* <SEO
           title="Ignite Call - Agendamento fácil!"
           description="Agendamento fácil com o Google Calendar 🚀"
           url={process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}
-        />
+        /> */}
       </Head>
       <body>
         <Main />

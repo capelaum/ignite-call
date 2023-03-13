@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
+import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { Check } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
@@ -64,49 +65,54 @@ export default function UpdateProfile() {
   }
 
   return (
-    <RegisterContainer>
-      <Header>
-        <Heading as="strong">Quase lá</Heading>
+    <>
+      <NextSeo title="Atualize seu perfil | Ignite Call" noindex />
+      <RegisterContainer>
+        <Header>
+          <Heading as="strong">Quase lá</Heading>
 
-        <Text>
-          Precisamos de algumas informações para criar seu perfil! Ah, você pode
-          editar essas informações depois.
-        </Text>
+          <Text>
+            Precisamos de algumas informações para criar seu perfil! Ah, você
+            pode editar essas informações depois.
+          </Text>
 
-        <MultiStep size={4} currentStep={4} />
-      </Header>
+          <MultiStep size={4} currentStep={4} />
+        </Header>
 
-      <ProfileBox
-        as="form"
-        onSubmit={handleSubmit(handleUpdateProfile)}
-        autoComplete="off"
-      >
-        <label>
-          <Text size="md">Foto de perfil</Text>
-          <Avatar
-            src={session.data?.user.avatar_url}
-            alt={session.data?.user.name}
-          />
-        </label>
+        <ProfileBox
+          as="form"
+          onSubmit={handleSubmit(handleUpdateProfile)}
+          autoComplete="off"
+        >
+          <label>
+            <Text size="md">Foto de perfil</Text>
+            <Avatar
+              src={session.data?.user.avatar_url}
+              alt={session.data?.user.name}
+            />
+          </label>
 
-        <label>
-          <Text size="sm">Sobre você</Text>
-          <TextArea {...register('bio')} />
-          <FormAnnotation size="sm">
-            Fale um pouco sobre você. Isto será exibido em sua página pessoal.
-          </FormAnnotation>
+          <label>
+            <Text size="sm">Sobre você</Text>
+            <TextArea {...register('bio')} />
+            <FormAnnotation size="sm">
+              Fale um pouco sobre você. Isto será exibido em sua página pessoal.
+            </FormAnnotation>
 
-          {errors.bio && (
-            <FormErrorMessage size="sm">{errors.bio.message}</FormErrorMessage>
-          )}
-        </label>
+            {errors.bio && (
+              <FormErrorMessage size="sm">
+                {errors.bio.message}
+              </FormErrorMessage>
+            )}
+          </label>
 
-        <Button type="submit" disabled={isSubmitting}>
-          Finalizar
-          <Check weight="bold" />
-        </Button>
-      </ProfileBox>
-    </RegisterContainer>
+          <Button type="submit" disabled={isSubmitting}>
+            Finalizar
+            <Check weight="bold" />
+          </Button>
+        </ProfileBox>
+      </RegisterContainer>
+    </>
   )
 }
 

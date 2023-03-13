@@ -5,6 +5,7 @@ import {
   Text
 } from '@capelaum-packages/ignite-react-05-design-system-react'
 import { GetStaticProps } from 'next'
+import { NextSeo } from 'next-seo'
 import { ScheduleForm } from './ScheduleForm'
 import { ScheduleContainer, UserHeader } from './styles'
 
@@ -19,15 +20,18 @@ interface ScheduleProps {
 
 export default function Schedule({ user }: ScheduleProps) {
   return (
-    <ScheduleContainer>
-      <UserHeader>
-        <Avatar src={user.avatarUrl} alt={user.name} />
-        <Heading size="md">{user.name}</Heading>
-        <Text>{user.bio}</Text>
-      </UserHeader>
+    <>
+      <NextSeo title={`Agendar com ${user.name} | Ignite Call`} />
+      <ScheduleContainer>
+        <UserHeader>
+          <Avatar src={user.avatarUrl} alt={user.name} />
+          <Heading size="md">{user.name}</Heading>
+          <Text>{user.bio}</Text>
+        </UserHeader>
 
-      <ScheduleForm />
-    </ScheduleContainer>
+        <ScheduleForm />
+      </ScheduleContainer>
+    </>
   )
 }
 
