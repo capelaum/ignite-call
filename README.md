@@ -36,4 +36,4 @@ Pode-se conferir o layout no Figma em [Figma - Ignite Call](https://www.figma.co
 
 ## License
 
-Pode-se conferir a [licença MIT](./LICENSE.md)
+Pode-se conferir a [licença MIT](./LICENSE)
