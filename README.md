@@ -1,4 +1,4 @@
-# [Ignite Call](https://www.capelaum-ignite-call.vercel.app)
+# [Ignite Call](https://capelaum-ignite-call.vercel.app)
 
 <img src="github/Capa.png" />
 

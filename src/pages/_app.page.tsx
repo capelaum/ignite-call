@@ -22,13 +22,13 @@ export default function App({
             openGraph={{
               type: 'website',
               locale: 'pt_BR',
-              url: 'https://www.capelaum-ignite-call.vercel.app',
+              url: process.env.NEXT_PUBLIC_URL,
               siteName: 'Ignite Call',
               title: 'Ignite Call - Agendamento fácil!',
               description: 'Agendamento fácil com o Google Calendar 🚀',
               images: [
                 {
-                  url: 'https://www.capelaum-ignite-call.vercel.app/images/Capa.png',
+                  url: `${process.env.NEXT_PUBLIC_URL}/images/Capa.png`,
                   width: 1280,
                   height: 720,
                   alt: 'Ignite Call - Capa',
